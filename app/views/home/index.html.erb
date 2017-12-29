@@ -6,4 +6,4 @@ Hello <%= current_user.email %>
 </br>
 <%= link_to "Sair", destroy_user_session_path, method: :delete %></span></li>
 <%= link_to "Editar informações de perfil", edit_user_registration_path(current_user.id) %></span></li>
-<!--  -->
+<%= render 'tournaments/index'%>
