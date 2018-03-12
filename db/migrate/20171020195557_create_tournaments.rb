@@ -3,6 +3,7 @@ class CreateTournaments < ActiveRecord::Migration[5.1]
     create_table :tournaments do |t|
       t.string :name
       t.date :date
+      t.references :user
 
       t.timestamps
     end
