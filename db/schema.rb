@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171229002932) do
+ActiveRecord::Schema.define(version: 20180312175547) do
 
   create_table "characters", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.datetime "created_at", null: false
@@ -20,16 +20,22 @@ ActiveRecord::Schema.define(version: 20171229002932) do
   create_table "tournaments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.date "date"
-    t.bigint "user_id"
+    t.integer "user_id_owner"
+    t.integer "qtde_users"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_tournaments_on_user_id"
+  end
+
+  create_table "tournaments_users", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "user_id", null: false
+    t.bigint "tournament_id", null: false
+    t.index ["tournament_id", "user_id"], name: "index_tournaments_users_on_tournament_id_and_user_id", unique: true
+    t.index ["user_id", "tournament_id"], name: "index_tournaments_users_on_user_id_and_tournament_id", unique: true
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
-    t.integer "type"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -44,6 +50,7 @@ ActiveRecord::Schema.define(version: 20171229002932) do
     t.string "uid"
     t.string "name"
     t.binary "image"
+    t.integer "type_user", default: 1
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

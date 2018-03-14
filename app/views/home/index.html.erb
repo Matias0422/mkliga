@@ -1,12 +1,4 @@
 Hello <%= current_user.email %>
-<% if current_user.image.present? %>
-<%= image_tag(current_user.image, size: "40") %>
-<% end %>
-</p>
-</br>
-<%= link_to "Sair", destroy_user_session_path, method: :delete %></span></li>
-<%= link_to "Editar informações de perfil", edit_user_registration_path(current_user.id) %></span></li>
-<p id="notice"><%= notice %></p>
 
 <h1>Tournaments</h1>
 
@@ -20,7 +12,7 @@ Hello <%= current_user.email %>
   </thead>
   
   <tbody>
-  <%if @user.type == 2 %>  
+  <%if @user.type_user == 2 %>  
     <% @tournaments.each do |tournament| %>
       <tr>
         <td><%= tournament.name %></td>
@@ -36,7 +28,7 @@ Hello <%= current_user.email %>
         <td><%= tournament.name %></td>
         <td><%= tournament.date %></td>
         <td><%= link_to 'Show', tournament %></td>
-        <% if tournament.user_id == current_user.id %>
+        <% if tournament.user_id_owner == current_user.id %>
           <td><%= link_to 'Edit', edit_tournament_path(tournament) %></td>
           <td><%= link_to 'Destroy', tournament, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>  

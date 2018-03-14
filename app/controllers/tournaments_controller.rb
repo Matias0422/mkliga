@@ -1,5 +1,5 @@
 class TournamentsController < ApplicationController
-  before_action :set_tournament, only: [:show, :edit, :update, :destroy]
+  before_action :set_tournament, only: [:edit, :update, :destroy]
 
   # GET /tournaments
   # GET /tournaments.json
@@ -10,6 +10,8 @@ class TournamentsController < ApplicationController
   # GET /tournaments/1
   # GET /tournaments/1.json
   def show
+     @tournament = Tournament.find(params[:id])
+     @users = @tournament.users
   end
 
   # GET /tournaments/new
@@ -25,7 +27,8 @@ class TournamentsController < ApplicationController
   # POST /tournaments.json
   def create
     @tournament = Tournament.new(tournament_params)
-    @tournament.user_id = current_user.id
+    @tournament.user_id_owner = current_user.id
+    @tournament.qtde_users = 0
     
     respond_to do |format|
       if @tournament.save
@@ -51,6 +54,20 @@ class TournamentsController < ApplicationController
       end
     end
   end
+  
+  def registrate_user
+    @tournament = Tournament.find(params[:id])
+    @tournament.users << current_user
+    if @tournament.qtde_users >= 23
+      redirect_to tournament_path(@tournament)
+      flash[:error] = 'Não adianta, torneio lotado otário!'
+    else  
+      @tournament.qtde_users += 1
+      @tournament.save
+      redirect_to tournament_path(@tournament)
+      flash[:notice] = 'Registrado com Sucesso'
+    end
+  end  
 
   # DELETE /tournaments/1
   # DELETE /tournaments/1.json
@@ -66,10 +83,20 @@ class TournamentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_tournament
       @tournament = Tournament.find(params[:id])
+      if current_user.id == @tournament.user_id_owner || current_user.type_user == 2
+        # Do nothing
+      else  
+        flash[:error] = 'Acesso Negado'
+        redirect_to home
+      end  
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tournament_params
-      params.require(:tournament).permit(:name, :date)
+      params.require(:tournament).permit(:name, :date, user_ids: [])
+    end
+    
+    def tournament_params_registrate
+      params.require(:tournament).permit(user_ids: [])
     end
 end
