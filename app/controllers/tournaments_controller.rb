@@ -68,6 +68,20 @@ class TournamentsController < ApplicationController
       flash[:notice] = 'Registrado com Sucesso'
     end
   end  
+  
+  def destroy_user
+    @user = User.find(params[:user_id])
+    @tournament = Tournament.find(params[:tournament_id])
+    @tournament.users.delete(@user)
+    if @tournament.user_id_owner == current_user.id || current_user.type_user = 2
+      @tournament.save
+      redirect_to tournament_path(@tournament)
+      flash[:notice] = 'Retirado com Sucesso'
+    else
+      redirect_to tournament_path(@tournament)
+      flash[:notice] = 'Não tem permissao'
+    end  
+  end 
 
   # DELETE /tournaments/1
   # DELETE /tournaments/1.json

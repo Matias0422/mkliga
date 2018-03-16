@@ -2,6 +2,7 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
 
+  config.scoped_views = true
   # config.omniauth :facebook, "124770941545517", callback_url: "http://localhost:3000/users/auth/facebook/callback"
   # ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET'],
   config.omniauth :facebook,'124770941545517' ,'313451f082aead7477609fd65d5bfa1f', callback_url: "http://localhost:3000/users/auth/facebook/callback"

@@ -8,7 +8,13 @@
   <%= @tournament.date %>
 </p>
 <% x = 0 %>
+<strong>Participantes:</strong><br><br>
 <% @users.each do |user| %>
+  <%= user.name %>
+<% if @tournament.user_id_owner == current_user.id || current_user.type_user == 2 %>  
+  <%= link_to 'Tirar', destroy_user_tournament_path(user_id: user.id,tournament_id: @tournament.id) %>
+<% end %>  
+<br><br> 
   <% if user.id == current_user.id %>
     <% x = 1 %>
   <% end %>
@@ -22,7 +28,7 @@
 <% if @tournament.qtde_users >= 23 %>
   <%= "Torneio lotado!" %>
 <% end %>
-<% if @tournament.user_id_owner == current_user.id || current_user.type_user = 2 %>
+<% if @tournament.user_id_owner == current_user.id || current_user.type_user == 2 %>
   <%= link_to 'Edit', edit_tournament_path(@tournament) %> |
 <% end %>  
 <%= link_to 'Back', root_path %>
