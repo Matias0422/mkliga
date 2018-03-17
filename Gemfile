@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 
-gem 'gmaps4rails', '~> 2.0.0'
+gem 'gmaps4rails', '~> 1.4.0'
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
