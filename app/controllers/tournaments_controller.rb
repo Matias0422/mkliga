@@ -12,10 +12,12 @@ class TournamentsController < ApplicationController
   def show
      @tournament = Tournament.find(params[:id])
      @users = @tournament.users
+     @json = Location.find_by(id: @tournament.location_id).to_gmaps4rails
   end
 
   # GET /tournaments/new
   def new
+    @location = Location.find(params[:id])
     @tournament = Tournament.new
   end
 
@@ -107,7 +109,7 @@ class TournamentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tournament_params
-      params.require(:tournament).permit(:name, :date, user_ids: [])
+      params.require(:tournament).permit(:name, :date, :location_id, :time)
     end
     
     def tournament_params_registrate

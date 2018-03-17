@@ -20,6 +20,16 @@
     <%= form.label :date %>
     <%= form.date_select :date, id: :tournament_date %>
   </div>
+  
+  <div class="field">
+    <%= form.label :time %>
+    <%= form.time_select :time, id: :tournament_time %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :location_id %>
+    <%= form.hidden_field :location_id , value: @location.id %>
+  </div>
 
   <div class="actions">
     <%= form.submit %>

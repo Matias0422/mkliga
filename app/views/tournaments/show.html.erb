@@ -7,6 +7,12 @@
   <strong>Date:</strong>
   <%= @tournament.date %>
 </p>
+
+<p>
+  <strong>Time:</strong>
+  <%= @tournament.time.hour%> :
+  <%= @tournament.time.min%>
+</p>
 <% x = 0 %>
 <strong>Participantes:</strong><br><br>
 <% @users.each do |user| %>
@@ -23,7 +29,7 @@
   <%= link_to 'Registrar', registrate_user_tournament_path(@tournament) %>
 <% end %>  
 <% if x == 1 %>
-  <%= "Já Registrado!"  %>
+  <strong><%= "Já Registrado!"  %></strong>
 <% end %>
 <% if @tournament.qtde_users >= 23 %>
   <%= "Torneio lotado!" %>
@@ -32,3 +38,7 @@
   <%= link_to 'Edit', edit_tournament_path(@tournament) %> |
 <% end %>  
 <%= link_to 'Back', root_path %>
+
+<br><br><strong><%= "Local:" %></strong>
+<br><br>
+<%= gmaps4rails(@json) %>

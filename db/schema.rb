@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180312175547) do
+ActiveRecord::Schema.define(version: 20180316193506) do
 
   create_table "characters", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "locations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.string "address"
+    t.float "longitude", limit: 24
+    t.float "latitude", limit: 24
+    t.boolean "gmaps"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -22,8 +32,11 @@ ActiveRecord::Schema.define(version: 20180312175547) do
     t.date "date"
     t.integer "user_id_owner"
     t.integer "qtde_users"
+    t.time "time"
+    t.bigint "location_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_tournaments_on_location_id"
   end
 
   create_table "tournaments_users", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
